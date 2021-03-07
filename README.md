@@ -1,7 +1,19 @@
 # Basic TypeScript
 
-- [Source](https://www.freecodecamp.org/news/learn-typescript-in-5-minutes-13eda868daeb/)
-- [Interactive course](https://scrimba.com/learn/intrototypescript)
+- [Basic TypeScript](#basic-typescript)
+  - [Installation](#installation)
+  - [Compilation](#compilation)
+  - [Types](#types)
+    - [Any](#any)
+    - [Inference](#inference)
+    - [Built in types](#built-in-types)
+  - [Functions](#functions)
+    - [Parameter types](#parameter-types)
+    - [Return types](#return-types)
+    - [Arrow functions](#arrow-functions)
+    - [Contextual typing in anonymous functions](#contextual-typing-in-anonymous-functions)
+  - [Object types](#object-types)
+    - [Optional properties](#optional-properties)
 
 ## Installation
 
@@ -44,11 +56,13 @@ var c = a + b;
 console.log(c); // 10
 ```
 
+[More on compilation and tooling](https://www.typescriptlang.org/docs/handbook/2/basic-types.html).
+
 ## Types
 
 Type annotations are the bread and butter of TypeScript, and enforce what sort of values can appear and be used where.
 
-[More info](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html).
+[More on types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html).
 
 ### Any
 
