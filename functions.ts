@@ -2,7 +2,7 @@ function greet(name: string) {
   console.log(`Hello, ${name.toUpperCase()}!!`);
 }
 
-greet('John');
+greet("John");
 
 function double(x: number): number {
   return x * 2;
