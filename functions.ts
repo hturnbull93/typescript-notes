@@ -22,14 +22,25 @@ names.forEach((s) => {
   console.log(s.toUpperCase());
 });
 
-const describePerson = (person: { name: string; age: number }) => {
-  console.log(`${person.name} is ${person.age} years old`);
+const describePerson = (person: { firstName: string, age: number }) => {
+  console.log(`${person.firstName} is ${person.age} years old`);
 };
 
-describePerson({ name: "Bob", age: 35 });
+describePerson({ firstName: "Bob", age: 35 });
 
 function printCoord(pt: { x: number; y: number }) {
   console.log(`The coordinate's position is x: ${pt.x}, y: ${pt.y}`);
 }
 
 printCoord({ x: 3, y: 7 });
+
+const greetPerson = (person: { firstName: string, lastName?: string }) => {
+  if (person.lastName !== undefined) {
+    console.log(`Hello, ${person.firstName.toUpperCase()} ${person.lastName.toUpperCase()}`)
+  } else {
+    console.log(`Hello, ${person.firstName.toUpperCase()}`)
+  }
+}
+
+greetPerson({ firstName: "Alice" });
+greetPerson({ firstName: "Chris", lastName: 'Jenkins' });

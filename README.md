@@ -200,11 +200,11 @@ names.forEach((s) => {
 Other than primitives, most types are objects, which are described similarly to object descructuring:
 
 ```ts
-const describePerson = (person: { name: string, age: number }) => {
-  console.log(`${name} is ${age} years old`)
+const describePerson = (person: { firstName: string, age: number }) => {
+  console.log(`${person.firstName} is ${person.age} years old`)
 }
 
-describePerson({ name: 'Bob', age: 35 });
+describePerson({ firstName: 'Bob', age: 35 });
 // Bob is 35 years old
 ```
 
@@ -217,4 +217,24 @@ function printCoord(pt: { x: number; y: number }) {
 
 printCoord({ x: 3, y: 7 });
 // The coordinate's position is x: 3, y: 7
+```
+
+### Optional properties
+
+Object properties with a `?` after the property name are optional. This does mean they need to be checked if they are undefined otherwise the code may error.
+
+```ts
+const greetPerson = (person: { firstName: string, lastName?: string }) => {
+  if (person.lastName !== undefined) {
+    console.log(`Hello, ${person.firstName.toUpperCase()} ${person.lastName.toUpperCase()}`)
+  } else {
+    console.log(`Hello, ${person.firstName.toUpperCase()}`)
+  }
+}
+
+greetPerson({ firstName: "Alice" });
+// Hello ALICE
+
+greetPerson({ firstName: "Chris", lastName: 'Jenkins' });
+// Hello CHRIS JENKINS
 ```
