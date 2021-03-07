@@ -9,4 +9,9 @@ function double(x: number): number {
 }
 
 const four = double(2);
-console.log('four :>>', four);
+console.log("four :>>", four);
+
+const square = (x: number): number => x * x;
+
+const sixteen = square(4);
+console.log("sixteen :>>", sixteen);

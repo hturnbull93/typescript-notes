@@ -162,3 +162,13 @@ const eight: number = double(4);
 ```
 
 The compiler is also able to infer the return type, though annotation helps with internal documentation and maintenance of the function's public interface.
+
+### Arrow functions
+
+Arrow functions can also be annotated:
+
+```ts
+const square = (x: number): number => x * x;
+
+const sixteen = square(4);
+```
