@@ -16,6 +16,7 @@
     - [Optional properties](#optional-properties)
   - [Union types](#union-types)
   - [Type aliases](#type-aliases)
+  - [Type interfaces](#type-interfaces)
 
 ## Installation
 
@@ -318,7 +319,7 @@ printFirstThree([1, 2, 3, 4, 5]);
 
 ## Type aliases
 
-To reuse types rather than writing them explicitly every time they occur, aliases can be defined:
+To reuse types rather than writing them explicitly every time they occur, aliases can be defined to describe the shape of types in an object:
 
 ```ts
 type Pet = {
@@ -343,4 +344,49 @@ praise(spot);
 // Good dog, Spot
 scold(spot);
 // No Spot, bad dog
+```
+
+Aliases are not extensible, but new types can be constructed using existing types:
+
+```ts
+type Vehicle = {
+  speed: number,
+}
+
+type Car = Vehicle & {
+  make: string,
+}
+
+const beetle: Car = {
+  speed: 60,
+  make: 'Volkswagen',
+};
+```
+
+## Type interfaces
+
+Interfaces can be extended similar to class based inheritance:
+
+```ts
+interface Animal {
+  name: string
+}
+
+interface Bear extends Animal {
+  honey: boolean
+}
+```
+
+Or re-opened:
+
+```ts
+interface Bear {
+  friends: string[],
+}
+
+const winnie: Bear = {
+  name: 'Winnie the Pooh',
+  honey: true,
+  friends: ['Piglet'],
+};
 ```
