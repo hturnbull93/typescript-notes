@@ -109,3 +109,35 @@ Tuples are an aray with a fixed number of elements whose types are known:
 ```ts
 const myTuple: [string, number] = ['cats', 2];
 ```
+
+## Functions
+
+### Parameter types
+
+Parameters can have type annotations to enforce that the correct argument values are passed to the function:
+
+```ts
+function greet(name: string) {
+  console.log(`Hello, ${name.toUpperCase()}!!`);
+}
+```
+
+Given that the `toUpperCase` method will only work on strings, TypeScript protects from errors at runtime by preventing inappropriate arguments being passed to `greet`. such as numbers;
+
+```ts
+greet(10);
+// Argument of type 'number' is not assignable to parameter of type 'string'.
+
+greet('John');
+// Hello, JOHN!!
+```
+
+The number of arguments will also be checked:
+
+```ts
+greet();
+// Expected 1 arguments, but got 0.
+
+greet('John', 'Alice');
+// Expected 1 arguments, but got 2.
+```
