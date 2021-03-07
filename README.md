@@ -194,3 +194,27 @@ names.forEach((s) => {
 // Property 'toUppercase' does not exist on type 'string'. Did you mean 'toUpperCase'?
 });
 ```
+
+## Object types
+
+Other than primitives, most types are objects, which are described similarly to object descructuring:
+
+```ts
+const describePerson = (person: { name: string, age: number }) => {
+  console.log(`${name} is ${age} years old`)
+}
+
+describePerson({ name: 'Bob', age: 35 });
+// Bob is 35 years old
+```
+
+Properties can be separated with either `,` or `;`:
+
+```ts
+function printCoord(pt: { x: number; y: number }) {
+  console.log(`The coordinate's position is x: ${pt.x}, y: ${pt.y}`);
+}
+
+printCoord({ x: 3, y: 7 });
+// The coordinate's position is x: 3, y: 7
+```
