@@ -15,3 +15,9 @@ const square = (x: number): number => x * x;
 
 const sixteen = square(4);
 console.log("sixteen :>>", sixteen);
+
+const names = ["Alice", "Bob", "Eve"];
+
+names.forEach((s) => {
+  console.log(s.toUpperCase());
+});

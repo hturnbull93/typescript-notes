@@ -172,3 +172,25 @@ const square = (x: number): number => x * x;
 
 const sixteen = square(4);
 ```
+
+### Contextual typing in anonymous functions
+
+The compiler can infer a type when the function appears in a place it can determine how it will be called:
+
+```ts
+const names = ["Alice", "Bob", "Eve"];
+
+names.forEach(function (s) {
+  console.log(s.toUppercase());
+// Property 'toUppercase' does not exist on type 'string'. Did you mean 'toUpperCase'?
+});
+```
+
+This also works for arrow functions too:
+
+```ts
+names.forEach((s) => {
+  console.log(s.toUppercase());
+// Property 'toUppercase' does not exist on type 'string'. Did you mean 'toUpperCase'?
+});
+```
