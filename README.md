@@ -35,6 +35,15 @@ The command can be used with regex/wildcards:
 tsc *.ts
 ```
 
+This is compiled in place to `first.js`, ES5 JavaScript:
+
+```js
+var a = 5;
+var b = 5;
+var c = a + b;
+console.log(c); // 10
+```
+
 ## Types
 
 Type annotations are the bread and butter of TypeScript, and enforce what sort of values can appear and be used where.
