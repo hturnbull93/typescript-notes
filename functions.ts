@@ -80,3 +80,24 @@ function printFirstThree(x: number[] | string) {
 
 printFirstThree('three');
 printFirstThree([1, 2, 3, 4, 5]);
+
+type Pet = {
+  name: string;
+  species: string;
+}
+
+function scold(pet: Pet) {
+  console.log(`No ${pet.name}, bad ${pet.species}`);
+}
+
+function praise(pet: Pet) {
+  console.log(`Good ${pet.species}, ${pet.name}`);
+}
+
+const spot: Pet = {
+  name: 'Spot',
+  species: 'dog',
+};
+
+praise(spot);
+scold(spot);

@@ -15,6 +15,7 @@
   - [Object types](#object-types)
     - [Optional properties](#optional-properties)
   - [Union types](#union-types)
+  - [Type aliases](#type-aliases)
 
 ## Installation
 
@@ -249,7 +250,6 @@ const greetPerson = (person: { firstName: string, lastName?: string }) => {
 
 greetPerson({ firstName: "Alice" });
 // Hello ALICE
-
 greetPerson({ firstName: "Chris", lastName: 'Jenkins' });
 // Hello CHRIS JENKINS
 ```
@@ -265,7 +265,6 @@ function printId(id: number | string) {
 
 printId(101);
 // Your ID is: 101
-
 printId("202");
 // Your ID is: 202
 ```
@@ -283,7 +282,6 @@ function printIdUpperCase(id: number | string) {
 
 printIdUpperCase(123);
 // 123
-
 printIdUpperCase('abc');
 // ABC
 ```
@@ -301,7 +299,6 @@ function welcomePeople(x: string[] | string) {
 
 welcomePeople(['Jessie', 'Alistair']);
 // Hello, Jessie and Alistair
-
 welcomePeople('Steve');
 //  Welcome lone traveler Steve
 ```
@@ -317,4 +314,33 @@ printFirstThree('three');
 // thr
 printFirstThree([1, 2, 3, 4, 5]);
 // [1, 2, 3]
+```
+
+## Type aliases
+
+To reuse types rather than writing them explicitly every time they occur, aliases can be defined:
+
+```ts
+type Pet = {
+  name: string;
+  species: string;
+}
+
+function scold(pet: Pet) {
+  console.log(`No ${pet.name}, bad ${pet.species}`);
+}
+
+function praise(pet: Pet) {
+  console.log(`Good ${pet.species}, ${pet.name}`);
+}
+
+const spot: Pet = {
+  name: 'Spot',
+  species: 'dog',
+};
+
+praise(spot);
+// Good dog, Spot
+scold(spot);
+// No Spot, bad dog
 ```
