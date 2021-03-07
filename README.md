@@ -14,6 +14,7 @@
     - [Contextual typing in anonymous functions](#contextual-typing-in-anonymous-functions)
   - [Object types](#object-types)
     - [Optional properties](#optional-properties)
+  - [Union types](#union-types)
 
 ## Installation
 
@@ -251,4 +252,69 @@ greetPerson({ firstName: "Alice" });
 
 greetPerson({ firstName: "Chris", lastName: 'Jenkins' });
 // Hello CHRIS JENKINS
+```
+
+## Union types
+
+Union types are formed of two or more of other types:
+
+```ts
+function printId(id: number | string) {
+  console.log(`Your ID is: ${id}`);
+}
+
+printId(101);
+// Your ID is: 101
+
+printId("202");
+// Your ID is: 202
+```
+
+In the instance where a union type needs to be treated differently based on the type it actually is, you must *narrow* the union:
+
+```ts
+function printIdUpperCase(id: number | string) {
+  if (typeof id === "string") {
+    console.log(id.toUpperCase());
+  } else {
+    console.log(id);
+  }
+}
+
+printIdUpperCase(123);
+// 123
+
+printIdUpperCase('abc');
+// ABC
+```
+
+Unions of individual variables and arrays are a common pattern:
+
+```ts
+function welcomePeople(x: string[] | string) {
+  if (Array.isArray(x)) {
+    console.log("Hello, " + x.join(" and "));
+  } else {
+    console.log("Welcome lone traveler " + x);
+  }
+}
+
+welcomePeople(['Jessie', 'Alistair']);
+// Hello, Jessie and Alistair
+
+welcomePeople('Steve');
+//  Welcome lone traveler Steve
+```
+
+A union can effectively be used where the members have something in common, such as a method:
+
+```ts
+function printFirstThree(x: number[] | string) {
+  console.log(x.slice(0, 3));
+}
+
+printFirstThree('three');
+// thr
+printFirstThree([1, 2, 3, 4, 5]);
+// [1, 2, 3]
 ```
