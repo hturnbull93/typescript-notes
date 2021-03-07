@@ -3,3 +3,10 @@ function greet(name: string) {
 }
 
 greet('John');
+
+function double(x: number): number {
+  return x * 2;
+}
+
+const four = double(2);
+console.log('four :>>', four);

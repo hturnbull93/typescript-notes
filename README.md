@@ -141,3 +141,24 @@ greet();
 greet('John', 'Alice');
 // Expected 1 arguments, but got 2.
 ```
+
+### Return types
+
+The return type of a function can be specified:
+
+```ts
+function double(x: number): number {
+  return x * 2;
+}
+```
+
+The compiler will be able to tell what type the return value is.
+
+```ts
+const four: string = double(2);
+// Type 'number' is not assignable to type 'string'.
+
+const eight: number = double(4);
+```
+
+The compiler is also able to infer the return type, though annotation helps with internal documentation and maintenance of the function's public interface.
