@@ -19,6 +19,7 @@
   - [Type interfaces](#type-interfaces)
   - [Type assertions](#type-assertions)
   - [Literal types](#literal-types)
+    - [Literal inference](#literal-inference)
 
 ## Installation
 
@@ -458,4 +459,29 @@ greetPerson({ firstName: "Alice" });
 // Hello, Alice
 greetPerson({ firstName: "Chris", lastName: 'Jenkins' });
 // Hello, Chris Jenkins
+```
+
+### Literal inference
+
+Properties on objects are mutable, so are infered to be the type of the value they are assigned with, rather than the literal:
+
+```ts
+const mutableProperties = { one: 1 };
+mutableProperties.one = 2;
+```
+
+To constrain the property to that literal value, either specify `as` for the properties themselves:
+
+```ts
+const immutableUsingAs = { one: 1 as 1 };
+immutableUsingAs.one = 2
+// Type '2' is not assignable to type '1'.
+```
+
+Or to convert the entire object to literals, specify the object `as const`:
+
+```ts
+const immutableUsingConst = { one: 1 } as const;
+immutableUsingConst.one = 2;
+// Cannot assign to 'one' because it is a read-only property.
 ```
