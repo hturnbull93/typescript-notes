@@ -17,6 +17,7 @@
   - [Union types](#union-types)
   - [Type aliases](#type-aliases)
   - [Type interfaces](#type-interfaces)
+    - [Type assertions](#type-assertions)
 
 ## Installation
 
@@ -389,4 +390,24 @@ const winnie: Bear = {
   honey: true,
   friends: ['Piglet'],
 };
+```
+
+### Type assertions
+
+In order to give TypeScript information that it can't possibly know about, you can assert the type at assignment:
+
+```ts
+const myCanvas = document.getElementById("main_canvas") as HTMLCanvasElement;
+```
+
+Alternatively, angle-bracket generic syntax can be used:
+```ts
+const secondaryCanvas = <HTMLCanvasElement>document.getElementById("secondary_canvas");
+```
+
+Type assertion can only be between more and less specific versions of a type, i.e. you could not generally coerce one primitive into another:
+
+```ts
+const x = 'hello' as number;
+// Conversion of type 'string' to type 'number' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
 ```
