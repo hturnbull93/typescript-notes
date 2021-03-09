@@ -20,6 +20,9 @@
 - [Type assertions](#type-assertions)
 - [Literal types](#literal-types)
   - [Literal inference](#literal-inference)
+- [`null` and `undefined`](#null-and-undefined)
+  - [`strictNullChecks`](#strictnullchecks)
+  - [Non-null assertion operator](#non-null-assertion-operator)
 
 ## Installation
 
@@ -484,4 +487,40 @@ Or to convert the entire object to literals, specify the object `as const`:
 const immutableUsingConst = { one: 1 } as const;
 immutableUsingConst.one = 2;
 // Cannot assign to 'one' because it is a read-only property.
+```
+
+## `null` and `undefined`
+
+ `null` and `undefined` have types of the same name. 
+
+
+### `strictNullChecks`
+
+A value that could be `null` and `undefined` (for example with a union), can be accessed, even though it might be null or undefined.
+
+With `strictNullChecks` on, narrowing must be used to guard against `null` and `undefined`
+
+```ts
+function checkForNull(x: string | undefined) {
+  if (x === undefined) {
+    // do nothing
+  } else {
+    console.log("Hello, " + x.toUpperCase());
+  }
+}
+
+function noCheckForNull(x: string | undefined) {
+    console.log("Hello, " + x.toUpperCase());
+    // Object is possibly 'undefined'.
+}
+```
+
+### Non-null assertion operator
+
+To dangerously overide the checking, and assert that the value will not be `null` or `undefined`, use a `!` chaining operator:
+
+```ts
+function assertNonNull(x: string | undefined) {
+  console.log("Hello, " + x!.toUpperCase());
+}
 ```
