@@ -17,7 +17,8 @@
   - [Union types](#union-types)
   - [Type aliases](#type-aliases)
   - [Type interfaces](#type-interfaces)
-    - [Type assertions](#type-assertions)
+  - [Type assertions](#type-assertions)
+  - [Literal types](#literal-types)
 
 ## Installation
 
@@ -392,7 +393,7 @@ const winnie: Bear = {
 };
 ```
 
-### Type assertions
+## Type assertions
 
 In order to give TypeScript information that it can't possibly know about, you can assert the type at assignment:
 
@@ -409,5 +410,52 @@ Type assertion can only be between more and less specific versions of a type, i.
 
 ```ts
 const x = 'hello' as number;
-// Conversion of type 'string' to type 'number' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+// Conversion of type 'string' to type 'number' may be a mistake
+// because neither type sufficiently overlaps with the other. If
+// this was intentional, convert the expression to 'unknown' first.
+```
+
+## Literal types
+
+Literal types are useful when defining sets of options that must have certain values:
+
+```ts
+printInCase("Hello, world", "upper");
+const printInCase = (s: string, caseToPrint?: "upper" | "lower") => {
+  switch (caseToPrint) {
+    case "upper":
+      console.log(s.toUpperCase());
+      break;
+    case "lower":
+      console.log(s.toLowerCase());
+      break;
+    default:
+      console.log(s);
+      break;
+  }
+};
+
+printInCase("Hello, world", "upper");
+// HELLO, WORLD
+```
+
+This can be used to mix types as well:
+
+```ts
+const greetPerson = (person: { firstName: string, lastName?: string } | 'unknown') => {
+  if (person === 'unknown') {
+    console.log('Hello, stranger');
+  } else if (person.lastName !== undefined) {
+    console.log(`Hello, ${person.firstName} ${person.lastName}`)
+  } else {
+    console.log(`Hello, ${person.firstName.toUpperCase()}`)
+  }
+}
+
+greetPerson('unknown');
+// Hello, stranger
+greetPerson({ firstName: "Alice" });
+// Hello, Alice
+greetPerson({ firstName: "Chris", lastName: 'Jenkins' });
+// Hello, Chris Jenkins
 ```
