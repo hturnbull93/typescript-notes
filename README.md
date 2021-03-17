@@ -23,6 +23,11 @@
 - [`null` and `undefined`](#null-and-undefined)
   - [`strictNullChecks`](#strictnullchecks)
   - [Non-null assertion operator](#non-null-assertion-operator)
+- [Enums](#enums)
+  - [Numeric enums](#numeric-enums)
+  - [String enums](#string-enums)
+  - [Enums as unions](#enums-as-unions)
+  - [Objects as an alternative](#objects-as-an-alternative)
 
 ## Installation
 
@@ -523,4 +528,97 @@ To dangerously overide the checking, and assert that the value will not be `null
 function assertNonNull(x: string | undefined) {
   console.log("Hello, " + x!.toUpperCase());
 }
+```
+
+## Enums
+
+[More info on enums](https://www.typescriptlang.org/docs/handbook/enums.html).
+
+TypeScript adds enums as a laguage feature (rather than simply typing javascript).
+
+### Numeric enums
+
+By default, enums are numeric, are initialised at 0, and increment through the members:
+
+```ts
+enum Direction {
+  Up,     // 0
+  Down,   // 1
+  Left,   // 2
+  Right,  // 3
+}
+```
+
+Enums can be initialised with values as well, which can be constant, or computed. Computed values have to come last:
+
+```ts
+const generateLast = () => Math.ceil(Math.random() * 10 + 3);
+
+enum Codes {
+  first = 1,              // 1, constant
+  second,                 // 2
+  third,                  // 3
+  last = generateLast(),  // Integer between 4 and 13 inclusive, computed
+}
+```
+
+Numeric enums get a reverse mapping, so it's easy to check the key:
+```ts
+const keyForSecond = Codes[2]; // 'second'
+```
+
+### String enums
+
+String enums are easily serialised to make them human readable, but don't auto increment, nor do they have a reverse mapping:
+
+```ts
+enum Cardinals {
+  north = "NORTH",
+  east = "EAST",
+  south = "SOUTH",
+  west = "WEST",
+}
+```
+
+### Enums as unions
+
+Enums, when used to type, effectively become a union. The following are functionally the same, however the enum allows you to easily pass valid members:
+
+```ts
+const goInADirectionEnum = (direction: Cardinals) => {
+  console.log(`Going: ${direction}`);
+};
+
+goInADirectionEnum(Cardinals.north);
+// Going: NORTH
+
+const goInADirectionUnion = (
+  direction: "NORTH" | "EAST" | "SOUTH" | "WEST"
+) => {
+  console.log(`Going: ${direction}`);
+};
+
+goInADirectionUnion(Cardinals.north);
+// Going: NORTH
+```
+
+### Objects as an alternative
+
+An object with keys can be a sufficient alternative to enums, though it does take an extra line to prepare a type from the values:
+
+```ts
+const CardinalsObj = {
+  north: "NORTH",
+  east: "EAST",
+  south: "SOUTH",
+  west: "WEST",
+} as const;
+
+type ObjectCardinal = typeof CardinalsObj[keyof typeof CardinalsObj];
+
+const goInADirectionObject = (direction: ObjectCardinal) => {
+  console.log(`Going: ${direction}`);
+};
+
+goInADirectionObject(CardinalsObj.north);
 ```
