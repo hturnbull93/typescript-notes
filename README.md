@@ -28,6 +28,9 @@
   - [String enums](#string-enums)
   - [Enums as unions](#enums-as-unions)
   - [Objects as an alternative](#objects-as-an-alternative)
+- [Narrowing](#narrowing)
+  - [Type guards](#type-guards)
+  - [`instanceof` narrowing](#instanceof-narrowing)
 
 ## Installation
 
@@ -637,4 +640,103 @@ const goInADirectionObject = (direction: ObjectCardinal) => {
 };
 
 goInADirectionObject(CardinalsObj.north);
+```
+
+## Narrowing
+
+When functions are passed unions, the function needs to define control flow to handle each of the types the union could be:
+
+```ts
+function padLeft(padding: number | string, input: string) {
+  if (typeof padding === "number") {
+    return new Array(padding + 1).join(" ") + input;
+  } else {
+    return padding + input;
+  }
+}
+
+console.log(padLeft(2, "padded on the left"));
+// "  padded on the left"
+console.log(padLeft("hello", "world"));
+// "helloworld"
+```
+
+### Type guards
+
+Using `typeof` we can check the type of any value, which will return any of the following:
+
+- `"string"`
+- `"number"`
+- `"bigint"`
+- `"boolean"`
+- `"symbol"`
+- `"undefined"`
+- `"object"`
+- `"function"`
+
+Note that `typeof null` is `"object"`, so guard against null with `value === null` before guarding against objects:
+
+```ts
+function printAll(strs: string | string[] | null) {
+  if (strs === null) {
+    console.log(strs);
+  } else if (typeof strs === "object") {
+    for (const s of strs) {
+      console.log(s);
+    }
+  } else if (typeof strs === "string") {
+    console.log(strs);
+  }
+}
+
+printAll(["hello", "world"]);
+// hello
+// world
+printAll("hey");
+// hey
+printAll(null);
+// null
+```
+
+`null` and `undefined` coorce to false, so this guard could be combined withthe second by checking for truthiness of `strs`:
+
+```ts
+function printThese(strs: string | string[] | null) {
+  if (strs && typeof strs === "object") {
+    for (const s of strs) {
+      console.log(s);
+    }
+  } else if (typeof strs === "string") {
+    console.log(strs);
+  }
+}
+
+printThese(["hello", "world"]);
+// hello
+// world
+printThese("hey");
+// hey
+printThese(null);
+// null
+```
+
+However, be wary that `0` and empty strings coerce to false, but you may want to accept handle their cases instead of treating them with `null` and `undefined`.
+
+### `instanceof` narrowing
+
+When passed a value that is an instance of something, `instanceof` can be used to check if the value is an instance of that thing, by checking up the prototype chain. This can essentially be used for anything that is creating with the `new` keyword:
+
+```ts
+function logValue(x: Date | string) {
+  if (x instanceof Date) {
+    console.log(x.toUTCString());
+  } else {
+    console.log(x.toUpperCase());
+  }
+}
+
+logValue('hello there');
+// HELLO THERE
+logValue(new Date());
+// Wed, 17 Mar 2021 21:49:51 GMT
 ```
