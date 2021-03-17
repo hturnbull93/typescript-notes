@@ -70,6 +70,22 @@ var c = a + b;
 console.log(c); // 10
 ```
 
+Compilation and live type checking behaviour can be configured by passing flags to the compiler when invoking through the commandline:
+
+```shell
+tsc --noEmitOnError willNotBeUpdated.ts
+```
+
+Or via a config file such as tsconfig.json:
+
+```json
+{
+  "compilerOptions": {
+    "noEmitOnError": true,
+  }
+}
+```
+
 [More on compilation and tooling](https://www.typescriptlang.org/docs/handbook/2/basic-types.html).
 
 ## Types
