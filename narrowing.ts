@@ -78,3 +78,23 @@ if (isFish(pet)) {
 
 const zoo: (Fish | Bird)[] = [getPet(), getPet(), getPet()];
 const underWater: Fish[] = zoo.filter(isFish);
+
+interface Circle {
+  kind: "circle";
+  radius: number;
+}
+
+interface Square {
+  kind: "square";
+  sideLength: number;
+}
+
+type Shape = Circle | Square;
+
+function getArea(shape: Shape) {
+  if (shape.kind === "circle") {
+    return Math.PI * shape.radius ** 2;
+  } else if (shape.kind === "square") {
+    return shape.sideLength ** 2;
+  }
+}

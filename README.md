@@ -833,3 +833,47 @@ Another example; predicates can be used to filter arrays. A mixed array of `Fish
 const zoo: (Fish | Bird)[] = [getPet(), getPet(), getPet()];
 const underWater: Fish[] = zoo.filter(isFish);
 ```
+
+## Discriminated Unions
+
+- [To top](#contents)
+
+Most often you will be handling complex types, rather than primitives. Here, a `Shape` might have a `radius` if it is a circle or a `sideLength` if it is a square:
+
+```ts
+interface Shape {
+  kind: "circle" | "square";
+  radius?: number;
+  sideLength?: number;
+}
+```
+
+However this does not provide information about which of circles and squares have radii or side lengths, leading to the following errors:
+
+```ts
+function getArea(shape: Shape) {
+  if (shape.kind === "circle") {
+    return Math.PI * shape.radius ** 2;
+    // Object is possibly 'undefined'.
+  } else if (shape.kind === "square") {
+    return shape.sideLength ** 2;
+    // Object is possibly 'undefined'.
+  }
+}
+```
+
+It is possible to force the type checker to accept the fact that circles have `radius`s and squares have `sideLength`s with [non-null assertions](#non-null-assertion-operator), but it would be better to define a shape as a union of complex types:
+
+```ts
+interface Circle {
+  kind: "circle";
+  radius: number;
+}
+
+interface Square {
+  kind: "square";
+  sideLength: number;
+}
+
+type Shape = Circle | Square;
+```
