@@ -35,7 +35,8 @@
   - [Type guards](#type-guards)
   - [`instanceof` narrowing](#instanceof-narrowing)
   - [Type predicates](#type-predicates)
-- [Discriminated Unions](#discriminated-unions)
+  - [Discriminated Unions](#discriminated-unions)
+  - [The `never` type](#the-never-type)
 
 ## Installation
 
@@ -834,9 +835,7 @@ const zoo: (Fish | Bird)[] = [getPet(), getPet(), getPet()];
 const underWater: Fish[] = zoo.filter(isFish);
 ```
 
-## Discriminated Unions
-
-- [To top](#contents)
+### Discriminated Unions
 
 Most often you will be handling complex types, rather than primitives. Here, a `Shape` might have a `radius` if it is a circle or a `sideLength` if it is a square:
 
@@ -877,3 +876,38 @@ interface Square {
 
 type Shape = Circle | Square;
 ```
+
+### The `never` type
+
+`never` is used for cases where all possibilities have been narrowed through; you should never get here of course.
+
+This is useful for exhaustiveness checking, i.e. checking you are correctly handling all possible types, and not leaving any to slip past.
+
+For example, adding a new type of `Shape` is currently unhandled by `getArea`:
+
+```ts
+interface Triangle {
+  kind: "triangle";
+  sideLength: number;
+}
+
+type Shape = Circle | Square | Triangle;
+```
+
+By modifying `getArea` to be check exhaustively using `never`, we get an error telling us we did not handle `Triangle`:
+
+```ts
+function getAreaExhaustive(shape: Shape) {
+  switch (shape.kind) {
+    case "circle":
+      return Math.PI * shape.radius ** 2;
+    case "square":
+      return shape.sideLength ** 2;
+    default:
+      const _exhaustiveCheck: never = shape;
+      // Type 'Triangle' is not assignable to type 'never'.
+      return _exhaustiveCheck;
+  }
+}
+```
+
