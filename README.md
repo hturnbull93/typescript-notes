@@ -31,6 +31,7 @@
 - [Narrowing](#narrowing)
   - [Type guards](#type-guards)
   - [`instanceof` narrowing](#instanceof-narrowing)
+  - [Type predicates](#type-predicates)
 
 ## Installation
 
@@ -739,4 +740,66 @@ logValue('hello there');
 // HELLO THERE
 logValue(new Date());
 // Wed, 17 Mar 2021 21:49:51 GMT
+```
+
+### Type predicates
+
+A predicate is a function that returns a boolean, which in this case can be used as a type guard. Consider the following classes and a function to get a pet:
+
+```ts
+class Fish {
+  swim = (): void => {
+    console.log("Swimming");
+  };
+}
+
+class Bird {
+  fly = (): void => {
+    console.log("Flying");
+  };
+}
+
+const getPet = (): Fish | Bird => new (Math.random() > 0.5 ? Fish : Bird)();
+```
+
+This function is a predicate, which returns a boolean representing that the passed `pet` is a `Fish`:
+
+```ts
+function isFish(pet: Fish | Bird): pet is Fish {
+  return (pet as Fish).swim !== undefined;
+}
+```
+
+Which lets the compiler know that the scope in which `swim` is being called is appropriate, as the score has been narrowed to `Fish`, and in the else block it must be a `Bird` as that's the alternative that getPet returns:
+
+```ts
+const pet = getPet();
+
+if (isFish(pet)) {
+  pet.swim();
+} else {
+  pet.fly();
+}
+```
+
+Without the predicate the type guard raises its own error:
+
+```ts
+const pet = getPet();
+
+if (pet.swim) {
+  // Property 'swim' does not exist on type 'Fish | Bird'.
+  pet.swim();
+  // Property 'swim' does not exist on type 'Fish | Bird'.
+} else {
+  pet.fly();
+  // Property 'fly' does not exist on type 'Fish | Bird'.
+}
+```
+
+Another example; predicates can be used to filter arrays. A mixed array of `Fish` and `Bird`s can be filtered down to an array of `Fish`:
+
+```ts
+const zoo: (Fish | Bird)[] = [getPet(), getPet(), getPet()];
+const underWater: Fish[] = zoo.filter(isFish);
 ```

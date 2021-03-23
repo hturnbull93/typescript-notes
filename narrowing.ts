@@ -47,5 +47,34 @@ function logValue(x: Date | string) {
   }
 }
 
-logValue('hello there');
+logValue("hello there");
 logValue(new Date());
+
+class Fish {
+  swim = (): void => {
+    console.log("Swimming");
+  };
+}
+
+class Bird {
+  fly = (): void => {
+    console.log("Flying");
+  };
+}
+
+const getPet = (): Fish | Bird => new (Math.random() > 0.5 ? Fish : Bird)();
+
+function isFish(pet: Fish | Bird): pet is Fish {
+  return (pet as Fish).swim !== undefined;
+}
+
+let pet = getPet();
+
+if (isFish(pet)) {
+  pet.swim();
+} else {
+  pet.fly();
+}
+
+const zoo: (Fish | Bird)[] = [getPet(), getPet(), getPet()];
+const underWater: Fish[] = zoo.filter(isFish);
