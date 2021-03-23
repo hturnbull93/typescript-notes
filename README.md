@@ -1,6 +1,9 @@
 <!-- omit in toc -->
 # TypeScript Notes
 
+## Contents
+
+- [Contents](#contents)
 - [Installation](#installation)
 - [Compilation](#compilation)
 - [Types](#types)
@@ -32,8 +35,11 @@
   - [Type guards](#type-guards)
   - [`instanceof` narrowing](#instanceof-narrowing)
   - [Type predicates](#type-predicates)
+- [Discriminated Unions](#discriminated-unions)
 
 ## Installation
+
+- [To top](#contents)
 
 Install TypeScript globally with: 
 
@@ -52,6 +58,8 @@ console.log(c); // 10
 ```
 
 ## Compilation
+
+- [To top](#contents)
 
 Compile TypeScript into JavaScript with:
 
@@ -93,6 +101,8 @@ Or via a config file such as tsconfig.json:
 [More on compilation and tooling](https://www.typescriptlang.org/docs/handbook/2/basic-types.html).
 
 ## Types
+
+- [To top](#contents)
 
 Type annotations are the bread and butter of TypeScript, and enforce what sort of values can appear and be used where.
 
@@ -159,6 +169,8 @@ const myTuple: [string, number] = ['cats', 2];
 ```
 
 ## Functions
+
+- [To top](#contents)
 
 ### Parameter types
 
@@ -245,6 +257,8 @@ names.forEach((s) => {
 
 ## Object types
 
+- [To top](#contents)
+
 Other than primitives, most types are objects, which are described similarly to object descructuring:
 
 ```ts
@@ -287,6 +301,8 @@ greetPerson({ firstName: "Chris", lastName: 'Jenkins' });
 ```
 
 ## Union types
+
+- [To top](#contents)
 
 Union types are formed of two or more of other types:
 
@@ -350,6 +366,8 @@ printFirstThree([1, 2, 3, 4, 5]);
 
 ## Type aliases
 
+- [To top](#contents)
+
 To reuse types rather than writing them explicitly every time they occur, aliases can be defined to describe the shape of types in an object:
 
 ```ts
@@ -396,6 +414,8 @@ const beetle: Car = {
 
 ## Type interfaces
 
+- [To top](#contents)
+
 Interfaces can be extended similar to class based inheritance:
 
 ```ts
@@ -424,6 +444,8 @@ const winnie: Bear = {
 
 ## Type assertions
 
+- [To top](#contents)
+
 In order to give TypeScript information that it can't possibly know about, you can assert the type at assignment:
 
 ```ts
@@ -445,6 +467,8 @@ const x = 'hello' as number;
 ```
 
 ## Literal types
+
+- [To top](#contents)
 
 Literal types are useful when defining sets of options that must have certain values:
 
@@ -516,6 +540,8 @@ immutableUsingConst.one = 2;
 
 ## `null` and `undefined`
 
+- [To top](#contents)
+
  `null` and `undefined` have types of the same name. 
 
 
@@ -551,6 +577,8 @@ function assertNonNull(x: string | undefined) {
 ```
 
 ## Enums
+
+- [To top](#contents)
 
 [More info on enums](https://www.typescriptlang.org/docs/handbook/enums.html).
 
@@ -644,6 +672,8 @@ goInADirectionObject(CardinalsObj.north);
 ```
 
 ## Narrowing
+
+- [To top](#contents)
 
 When functions are passed unions, the function needs to define control flow to handle each of the types the union could be:
 
